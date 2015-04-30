@@ -27,13 +27,18 @@
                         <div class="collapse navbar-collapse" collapse="isCollapsed">
                             <ul class="nav navbar-nav">
                                 <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-                                <li ui-sref-active="active"><a ui-sref="transclusionExample">Directive example</a></li>
+                                <li ui-sref-active="active"><a ui-sref="content">Content</a></li>
                             </ul>
                         </div>
 
                     </div>
                 </nav>
-                <div ui-view="main"></div>
+                
+                <ui-view></ui-view>
+                
+                <footer>
+                    <p>Created by marek.ozw@gmail.com</p>
+                </footer>
             </div>
         </div>
     </div>

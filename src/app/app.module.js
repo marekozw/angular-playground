@@ -4,7 +4,7 @@ angular.module('ngDevstack', [
     'templates.app',
     'ngDevstack.conf',
     'ngDevstack.home',
-    'ngDevstack.transclusionExample',
+    'ngDevstack.content',
     'ui.bootstrap',
     'ui.router'
 ]);
