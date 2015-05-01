@@ -1,4 +1,6 @@
 <div>
-	<span>{{ isSelected ? 'CHECKED' : 'UNCHECKED' }} | </span>
-	<span ng-transclude></span>
+  <div ng-click="onElementClick()">
+  	<span>{{ isSelected ? 'CHECKED' : 'UNCHECKED' }} | </span>
+  	<span ng-transclude></span>
+  </div>
 </div>

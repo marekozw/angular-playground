@@ -5,9 +5,9 @@
 		.module('ngDevstack.customCheckList')
 		.controller('CustomCheckListController', CustomCheckListController);
 
-	CustomCheckListController.$inject = ['$timeout', 'customCheckListService'];
+	CustomCheckListController.$inject = ['customCheckListService'];
 
-	function CustomCheckListController ($timeout, customCheckListService) {
+	function CustomCheckListController (customCheckListService) {
 		var customCheckList = this;
 		customCheckList.elementList = customCheckListService;
 	

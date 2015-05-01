@@ -1,20 +1,103 @@
 <section class="content">
     <div class="jumbotron">
-        <h1>Custom Check List</h1>
+      <h1>Custom Check List</h1>
 
-		<p>
-			Follwoing list items model does not need to have "selected" attribute specified. mp-custom-check directive will decoreate model with "selected"
-			attribute anyway.
-		</p>
+  		<p>
+  			Follwoing list items model does not need to have "selected" attribute specified. mp-custom-check directive will decoreate model with "selected"
+  			attribute anyway.
+  		</p>
 
-        <ul>
-        	<li ng-repeat="element in customCheckList.elementList"
-        		mp-custom-check ng-model="element.selected">
-        		<span ng-bind="element.name"></span>
-        	</li>
-        </ul>
+      <!-- ====== -->
+      <h3>Case 1</h3>
 
-        <button ng-click="customCheckList.confirm()">Confirm</button>
-        <span>{{ customCheckList.confirmedEls }}</span>
+      <h4>Preconditions</h4>
+      <ul>
+        <li>Directive uses "ng-click" for click event.</li>
+        <li>Directive does not create isolated scope itself.</li>
+        <li>List is generated with "ng-repeat" so each list item has isolated scope anyway (because ng-repeat creates it).</li>
+      </ul>
+
+      <h4>Working Example</h4>
+      <ul>
+      	<li ng-repeat="element in customCheckList.elementList"
+      		mp-custom-check ng-model="element.selected">
+      		<span ng-bind="element.name"></span>
+      	</li>
+      </ul>
+
+      <!-- <button ng-click="customCheckList.confirm()">Confirm</button> -->
+      <span>Model: {{ customCheckList.elementList }}</span>
+
+      <h4>Conclusion</h4>
+      <span>Model is updated from directive because ng-click automatically calls $scope.$apply() function. Situation would be different, if we had used different method for click event.</span>
+
+      <hr>
+
+       <!-- ====== -->
+      <h3>Case 2</h3>
+
+      <h4>Preconditions</h4>
+      <ul>
+        <li>Directive uses "element.on()" for click event.</li>
+        <li>We call $scope.$digest() at the end of the click event handler method</li>
+        <li>Directive does not create isolated scope itself.</li>
+        <li>List is generated with "ng-repeat" so each list item has isolated scope anyway (because ng-repeat creates it).</li>
+      </ul>
+
+      <h4>Working Example</h4>
+      <ul>
+        <li ng-repeat="element in customCheckList.elementList"
+          mp-element-on-custom-check ng-model="element.selected">
+          <span ng-bind="element.name"></span>
+        </li>
+      </ul>
+      <span>Model: {{ customCheckList.elementList }}</span><br /><br />
+      
+      <button ng-click="customCheckList.confirm()">Confirm</button>
+      <span>Confirmed Model: {{ customCheckList.confirmedEls }}</span>
+      
+      <h4>Conclusion</h4>
+      <span>In this example model inside controller is excluded from digest cycle. Directive has its own child scope (because of ng-repeat) and it updates itself only (because we called $scope.$digest() instead of $scope.$apply() method).Nevertheless, model is updated correctly after clicking on Confirm button. Clicking on Confirm button is done by ng-click directive, so digest cycle will run normaly (ng-click directive automatically calls $scope.$apply() method) and every scope will be updated. This is some good idea of reducing digest cycles to minimum. Scope will update only after Confirm button click. If you want to keep element.on() convention rater than ng-click and make directive to work the same way as in Case 1, just replace scope.$digest() with scope.$apply() call inside directive.</span>
+
+      <hr>
+
+       <!-- ====== -->
+      <h3>Case 3</h3>
+
+      <h4>Preconditions</h4>
+      <ul>
+        <li>Directive uses "element.on()" for click event.</li>
+        <li>We call $scope.$digest() at the end of the click event handler method</li>
+        <li>Directive does not create isolated scope itself.</li>
+        <li>List is generated manually, so there is no child nor isolated scope (directive does not create its own scope by default)</li>
+      </ul>
+
+      <h4>Working Example</h4>
+      <ul>
+        <li mp-element-on-custom-check 
+          ng-model="customCheckList.elementList[0].selected">
+          <span ng-bind="customCheckList.elementList[0].name"></span>
+        </li>
+        <li mp-element-on-custom-check 
+          ng-model="customCheckList.elementList[1].selected">
+          <span ng-bind="customCheckList.elementList[1].name"></span>
+        </li>
+        <li mp-element-on-custom-check 
+          ng-model="customCheckList.elementList[2].selected">
+          <span ng-bind="customCheckList.elementList[2].name"></span>
+        </li>
+        <li mp-element-on-custom-check 
+          ng-model="customCheckList.elementList[3].selected">
+          <span ng-bind="customCheckList.elementList[3].name"></span>
+        </li>
+        <li mp-element-on-custom-check 
+          ng-model="customCheckList.elementList[4].selected">
+          <span ng-bind="customCheckList.elementList[4].name"></span>
+        </li>
+      </ul>
+      <span>Model: {{ customCheckList.elementList }}</span><br /><br />
+
+      <h4>Conclusion</h4>
+      <span>In this example we can see two effects. Model is getting updated correcly. This is because directive does not create any child nor isolated scope and scope.$digest() is enough since we are still in the same scope. Which can be usefull (but not recomended). Also all elements inside list reacts at the same time. This is because there is no scope separation between them. Which cannot be usefull. Directive should allways have isolated or at least child scope on its own.</span>
     </div>
 </section>
