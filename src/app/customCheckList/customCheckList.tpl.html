@@ -1,0 +1,20 @@
+<section class="content">
+    <div class="jumbotron">
+        <h1>Custom Check List</h1>
+
+		<p>
+			Follwoing list items model does not need to have "selected" attribute specified. mp-custom-check directive will decoreate model with "selected"
+			attribute anyway.
+		</p>
+
+        <ul>
+        	<li ng-repeat="element in customCheckList.elementList"
+        		mp-custom-check ng-model="element.selected">
+        		<span ng-bind="element.name"></span>
+        	</li>
+        </ul>
+
+        <button ng-click="customCheckList.confirm()">Confirm</button>
+        <span>{{ customCheckList.confirmedEls }}</span>
+    </div>
+</section>

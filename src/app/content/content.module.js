@@ -3,6 +3,7 @@
 
 	angular
 		.module('ngDevstack.content', [
-			'ui.router'
+			'ui.router',
+			'ngDevstack.customCheckList'
 		]);
 }());

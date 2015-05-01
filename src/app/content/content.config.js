@@ -12,7 +12,7 @@
 			name: 'content',
 			url: '/content',
 			templateUrl: 'content/content.tpl.html',
-			controller: 'ContentController as content',
+			controller: function () {},
 			data: {
 				pageTitle: 'Content'
 			}
